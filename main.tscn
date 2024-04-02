@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://pmtt5d5r0jjq"]
+[gd_scene load_steps=3 format=3 uid="uid://pmtt5d5r0jjq"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_0hdo6"]
+[ext_resource type="Script" path="res://imageviewer.gd" id="1_156ou"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_trsdu"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -8,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_156ou")
 
 [node name="PictureViewer" type="TextureRect" parent="."]
 layout_mode = 1
@@ -20,8 +23,46 @@ offset_left = 0.199999
 offset_top = -0.400009
 offset_right = 0.199951
 offset_bottom = -0.400085
-texture = SubResource("ViewportTexture_0hdo6")
+texture = SubResource("ImageTexture_trsdu")
 expand_mode = 3
+
+[node name="EmptyDirectoryControl" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.013
+anchor_top = 0.11
+anchor_right = 0.763
+anchor_bottom = 0.856
+offset_left = 0.199999
+offset_top = -4.00001
+offset_right = 0.199951
+offset_bottom = -0.400085
+
+[node name="Button" type="Button" parent="EmptyDirectoryControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.562
+anchor_top = 0.407
+anchor_right = 0.662
+anchor_bottom = 0.453
+offset_left = -0.400024
+offset_top = 0.274994
+offset_right = 0.599915
+offset_bottom = 6.77499
+text = "Choose source
+"
+
+[node name="Label" type="Label" parent="EmptyDirectoryControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.381
+anchor_top = 0.407
+anchor_right = 0.512
+anchor_bottom = 0.463
+offset_left = -0.200012
+offset_top = 0.274994
+offset_right = 0.599976
+offset_bottom = 0.474976
+text = "No media source"
 
 [node name="Previous" type="Button" parent="."]
 layout_mode = 1
@@ -50,15 +91,27 @@ offset_bottom = 0.0999756
 text = "Next
 "
 
-[node name="Tree" type="Tree" parent="."]
+[node name="FolderView" type="ItemList" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.805
+anchor_left = 0.794
 anchor_top = 0.11
-anchor_right = 0.985
-anchor_bottom = 0.856
-offset_left = -4.00012
+anchor_right = 0.981
+anchor_bottom = 0.941
+offset_left = -0.400024
 offset_top = -4.00001
-offset_right = -0.00012207
-offset_bottom = -0.400085
-columns = 2
+offset_right = -0.600098
+offset_bottom = 0.0999756
+
+[node name="Export" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.331
+anchor_top = 0.883
+anchor_right = 0.399
+anchor_bottom = 0.941
+offset_left = -0.600037
+offset_top = 0.299927
+offset_right = -0.400024
+offset_bottom = 0.0999146
+text = "Export"
