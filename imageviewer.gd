@@ -6,3 +6,6 @@ var _config_service = null
 func _ready():
 	_config_service = ConfigService.new()
 
+
+func _on_button_pressed():
+	%FileDialog.show()

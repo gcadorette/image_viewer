@@ -6,6 +6,7 @@
 
 [node name="Main" type="Control"]
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -115,3 +116,15 @@ offset_top = 0.299927
 offset_right = -0.400024
 offset_bottom = 0.0999146
 text = "Export"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a Directory"
+position = Vector2i(600, 400)
+size = Vector2i(452, 162)
+ok_button_text = "Select This Folder"
+file_mode = 2
+access = 2
+show_hidden_files = true
+
+[connection signal="pressed" from="EmptyDirectoryControl/Button" to="." method="_on_button_pressed"]

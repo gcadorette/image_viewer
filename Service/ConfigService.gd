@@ -11,6 +11,9 @@ var _config_file = null
 var _config_obj = null
 
 func _init():
+	#fichier de config peut-être uniquement nécessaire pour les raw files types / img file types?
+	#ca vaut tu la peine de sauvegarder le src/dest folder? À moins que ça soit par projet (ou par folder de source, ig)
+	#au pire on sauvegarde toute et, au démarage, au demande si on veut continuer ou recommencer? Si recommencer, reset la config avec les valeurs par defaut
 	_config_file = ConfigFile.new()
 	_config_obj = Config.new()
 	
@@ -22,7 +25,13 @@ func _init():
 			print("File couldn't be accessed")
 			return
 	
-	# TODO: Lire la config
+	var all_sections = _config_file.get_sections()
+	"""
+	for section in all_sections:
+		match section:
+			"General":
+	"""
+
 	
 func get_folders_source() -> void: #TODO: Determiner la config à envoyer au UI
 	pass # TODO
@@ -34,3 +43,4 @@ func create_folder_source_windows(dir: String) -> void:
 	var section_name = "Folder%dSrc" % index
 	_config_file.set_value("section_name", "dir", dir)
 	_config_obj.folders_source.append(source_tt_config)
+
