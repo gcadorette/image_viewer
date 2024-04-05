@@ -1,2 +1,6 @@
 class_name GenericTypeTransferConfig
-# empty class, used as a parent class
+var Enum = load("res://Models/Enum.gd")
+var type
+
+func _init():
+	type = Enum.FileTransferType.unknown
