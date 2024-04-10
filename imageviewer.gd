@@ -3,6 +3,8 @@ extends Control
 var _config_service: ConfigService = null
 var _source_folder_service: FolderService = null
 var _tree_service: TreeService = null
+var _curr_selected: TreeItem = null
+var _curr_file: TreeFile = null
 
 func _ready():
 	_config_service = ConfigService.new()
@@ -46,12 +48,14 @@ func _on_folder_view_item_selected():
 	var selected = tree.get_selected()
 	var file: TreeFile = selected.get_metadata(0)
 	if file:
+		_curr_selected = selected
+		_curr_file = file
 		var url = _source_folder_service.get_real_file_url(file.relative_path, file.file_name)
 		var img = Image.new()
 		#img.load("\"%s\"" % url)
 		img.load(url)
 		%PictureViewer.texture = ImageTexture.create_from_image(img)
-
+"""
 func _input(event: InputEvent): 
 	var key_button = {
 		"next": %Next,
@@ -60,10 +64,12 @@ func _input(event: InputEvent):
 	for key in key_button:
 		if event.is_action_pressed(key):
 			key_button[key].emit_signal("pressed")
+"""
 
 
 func _on_next_pressed():
-	print("next!!!")
+	var tree = %FolderView
+	tree.set_selected(tree.get_next_selected(_curr_selected), 0)
 
 
 func _on_previous_pressed():
