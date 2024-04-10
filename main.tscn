@@ -15,7 +15,6 @@ script = ExtResource("1_156ou")
 
 [node name="PictureViewer" type="TextureRect" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.013
@@ -28,6 +27,7 @@ offset_right = 0.199951
 offset_bottom = -0.400085
 texture = SubResource("ImageTexture_trsdu")
 expand_mode = 3
+stretch_mode = 5
 
 [node name="EmptyDirectoryControl" type="Control" parent="."]
 unique_name_in_owner = true
@@ -70,6 +70,7 @@ offset_bottom = 0.474976
 text = "No media source"
 
 [node name="Previous" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.013
@@ -83,6 +84,7 @@ offset_bottom = 0.0999756
 text = "Previous"
 
 [node name="Next" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.696
@@ -95,18 +97,6 @@ offset_right = 0.199951
 offset_bottom = 0.0999756
 text = "Next
 "
-
-[node name="FolderView" type="ItemList" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.794
-anchor_top = 0.11
-anchor_right = 0.981
-anchor_bottom = 0.941
-offset_left = -0.400024
-offset_top = -4.00001
-offset_right = -0.600098
-offset_bottom = 0.0999756
 
 [node name="Export" type="Button" parent="."]
 layout_mode = 1
@@ -127,5 +117,23 @@ file_mode = 2
 access = 2
 unique_name_in_owner = true
 
+[node name="FolderView" type="Tree" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.814
+anchor_top = 0.039
+anchor_right = 0.95
+anchor_bottom = 0.878
+offset_left = 0.599976
+offset_top = -4.1
+offset_right = 3.99988
+offset_bottom = 4.79999
+allow_search = false
+scroll_vertical_enabled = false
+
 [connection signal="pressed" from="EmptyDirectoryControl/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Previous" to="." method="_on_previous_pressed"]
+[connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
 [connection signal="dir_selected" from="FolderDialog" to="." method="_on_native_file_dialog_dir_selected"]
+[connection signal="item_selected" from="FolderView" to="." method="_on_folder_view_item_selected"]

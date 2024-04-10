@@ -1,4 +1,4 @@
-class_name FolderElement
+class_name TreeFile
 var Enum = load("res://Models/Enum.gd")
 
 var relative_path = ""

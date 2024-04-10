@@ -1,6 +1,5 @@
 class_name WindowsFolderClient
 extends GenericFolderClient
-var FolderItems = load("res://Models/FolderItems.gd")
 var _dir: String = ""
 
 func _init(config: WindowsFileSystemConfig): 
@@ -18,7 +17,7 @@ func _get_all_items_recurr(found_files: Array[FolderItems], path: String) -> Arr
 			file_name = file_name.replace(_dir, "")
 			file_name = "%s/%s" % [path, file_name]
 			var is_folder = dir.current_is_dir()
-			var curr_item = FolderItems.new(is_folder, file_name.replace("%s/" % _dir, ""))
+			var curr_item = FolderItems.new(is_folder, file_name.replace("%s" % _dir, ""))
 			found_files.append(curr_item)
 			if is_folder:
 				found_files = _get_all_items_recurr(found_files, file_name)
@@ -26,3 +25,6 @@ func _get_all_items_recurr(found_files: Array[FolderItems], path: String) -> Arr
 		return found_files
 	else:
 		return found_files
+
+func get_file_path(relative_path: String) -> String:
+	return "%s%s" % [_dir, relative_path]

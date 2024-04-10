@@ -37,8 +37,8 @@ func _init():
 				var raw_filetypes_crude = _config_file.get_value(GENERAL_SECTION, "raw_file_type")
 				var img_filetypes_crude = _config_file.get_value(GENERAL_SECTION, "img_file_type")
 
-				_config_obj.raw_filetype = raw_filetypes_crude.split(SEPARATOR)
-				_config_obj.image_filetype = img_filetypes_crude.split(SEPARATOR)
+				_config_obj.raw_filetype = _unseparated_ini_config_to_capped_array(raw_filetypes_crude)
+				_config_obj.raw_filetype = _unseparated_ini_config_to_capped_array(img_filetypes_crude)
 			FOLDER_SRC_SECTION:
 				var type = int(_config_file.get_value(FOLDER_SRC_SECTION, "type"))
 				if type == Enum.FileTransferType.windows_folders:
@@ -79,3 +79,11 @@ func _dir_to_ini_file(file_types: Array[Variant]) -> String:
 	for file_type in file_types.slice(1, file_types.size()):
 		inified_types += "%s%s" % [SEPARATOR, file_type]
 	return inified_types
+
+func _unseparated_ini_config_to_capped_array(ini_config: String) -> Array[String]:
+	var uncapped_splitted = ini_config.split(SEPARATOR)
+	var capped_array: Array[String] = []
+	for uncapped in uncapped_splitted:
+		capped_array.append(uncapped.to_upper())
+	return capped_array
+
