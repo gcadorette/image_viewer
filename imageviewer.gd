@@ -1,4 +1,5 @@
 extends Control
+var Enum = load("res://Models/Enum.gd")
 
 var _config_service: ConfigService = null
 var _source_folder_service: FolderService = null
@@ -10,11 +11,12 @@ func _ready():
 	_config_service = ConfigService.new()
 	_source_folder_service = FolderService.new(_config_service.get_folder_source())
 	_tree_service = TreeService.new()
+	setup_source_choice_dialog()
 	switch_views()
 
 
-func _on_button_pressed() -> void:
-	%FolderDialog.show()
+func _on_empty_directory_button_pressed() -> void:
+	%SourceChoiceDialog.show()
 
 func switch_views() -> void:
 	var config = _config_service.get_folder_source()
@@ -34,7 +36,7 @@ func switch_for_source():
 	var elements = _source_folder_service.get_all_elements(_config_service.get_raw_file_types(), _config_service.get_img_file_types())
 	var tree = %FolderView
 	tree = _tree_service.construct_tree(elements, tree)
-	# TODO: Populer le side bar
+
 	%EmptyDirectoryControl.hide()
 	%PictureViewer.show()
 
@@ -52,7 +54,6 @@ func _on_folder_view_item_selected():
 		_curr_file = file
 		var url = _source_folder_service.get_real_file_url(file.relative_path, file.file_name)
 		var img = Image.new()
-		#img.load("\"%s\"" % url)
 		img.load(url)
 		%PictureViewer.texture = ImageTexture.create_from_image(img)
 """
@@ -66,11 +67,24 @@ func _input(event: InputEvent):
 			key_button[key].emit_signal("pressed")
 """
 
-
 func _on_next_pressed():
 	var tree = %FolderView
 	tree.set_selected(tree.get_next_selected(_curr_selected), 0)
 
-
 func _on_previous_pressed():
 	print("previous!!!")
+
+func setup_source_choice_dialog():
+	var type = _source_folder_service.type
+
+	%LocalChoice.set_pressed_no_signal(type == Enum.FileTransferType.local)
+	%SshChoice.set_pressed_no_signal(type == Enum.FileTransferType.ssh)
+
+func _on_source_choice_dialog_confirmed():
+	if %LocalChoice.button_pressed:
+		%FolderDialog.show()
+	elif %SshChoice.button_pressed:
+		%SshOptionsDialog.show()
+	else:
+		return
+	%SourceChoiceDialog.hide()

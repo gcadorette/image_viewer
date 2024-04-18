@@ -9,9 +9,9 @@ var _curr_folder: Dictionary = {}
 func _init(config: GenericTypeTransferConfig):
 	type = config.type
 	match type:
-		Enum.FileTransferType.windows_folders:
-			var windows_folders_config: WindowsFileSystemConfig = config
-			_client = WindowsFolderClient.new(windows_folders_config)
+		Enum.FileTransferType.local:
+			var local_folder_config: WindowsFileSystemConfig = config
+			_client = WindowsFolderClient.new(local_folder_config)
 		Enum.FileTransferType.ssh:
 			pass
 		_:

@@ -1,10 +1,6 @@
 class_name ConfigService
 
-var ConfigModel = load("res://Models/Config.gd")
 var Enum = load("res://Models/Enum.gd")
-var GenericTypeTransferConfig = load("res://Models/TransferTypeConfig/GenericTypeTransferConfig.gd")
-var WindowsFileSystemConfig = load("res://Models/TransferTypeConfig/WindowsFileSystemConfig.gd")
-var FolderConfigDestination = load("res://Models/FolderConfigDestination.gd")
 
 const CONFIG_FILE_PATH = "user://config.ini"
 const GENERAL_SECTION = "General"
@@ -38,10 +34,10 @@ func _init():
 				var img_filetypes_crude = _config_file.get_value(GENERAL_SECTION, "img_file_type")
 
 				_config_obj.raw_filetype = _unseparated_ini_config_to_capped_array(raw_filetypes_crude)
-				_config_obj.raw_filetype = _unseparated_ini_config_to_capped_array(img_filetypes_crude)
+				_config_obj.image_filetype = _unseparated_ini_config_to_capped_array(img_filetypes_crude)
 			FOLDER_SRC_SECTION:
 				var type = int(_config_file.get_value(FOLDER_SRC_SECTION, "type"))
-				if type == Enum.FileTransferType.windows_folders:
+				if type == Enum.FileTransferType.local:
 					var dir = _config_file.get_value(FOLDER_SRC_SECTION, "dir")
 					var source_tt_config = WindowsFileSystemConfig.new(dir)
 					source_tt_config.type = type

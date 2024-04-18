@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://pmtt5d5r0jjq"]
+[gd_scene load_steps=4 format=3 uid="uid://pmtt5d5r0jjq"]
 
 [ext_resource type="Script" path="res://imageviewer.gd" id="1_156ou"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_t1aaq"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_trsdu"]
 
@@ -13,6 +15,140 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_156ou")
 
+[node name="SshOptionsDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+title = "SSH Login Informations"
+initial_position = 4
+size = Vector2i(260, 225)
+dialog_hide_on_ok = false
+
+[node name="EditControl" type="Control" parent="SshOptionsDialog"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -217.0
+offset_right = 252.0
+offset_bottom = -49.0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HostNameLabel" type="Label" parent="SshOptionsDialog/EditControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.189
+anchor_bottom = 0.083
+offset_right = 68.124
+offset_bottom = 19.431
+text = "Host name"
+
+[node name="HostNameEdit" type="LineEdit" parent="SshOptionsDialog/EditControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 30.0
+offset_right = 90.0
+offset_bottom = 61.0
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="PortLabel" type="Label" parent="SshOptionsDialog/EditControl"]
+layout_mode = 0
+offset_left = 150.0
+offset_right = 240.0
+offset_bottom = 25.0
+text = "Port"
+
+[node name="PortEdit" type="LineEdit" parent="SshOptionsDialog/EditControl"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 0
+offset_left = 150.0
+offset_top = 30.0
+offset_right = 240.0
+offset_bottom = 61.0
+
+[node name="UsernameLabel" type="Label" parent="SshOptionsDialog/EditControl"]
+layout_mode = 1
+offset_top = 90.0
+offset_right = 90.0
+offset_bottom = 115.0
+text = "Username"
+
+[node name="UsernameEdit" type="LineEdit" parent="SshOptionsDialog/EditControl"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_top = 120.0
+offset_right = 90.0
+offset_bottom = 145.0
+
+[node name="PasswordLabel" type="Label" parent="SshOptionsDialog/EditControl"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 90.0
+offset_right = 240.0
+offset_bottom = 115.0
+text = "Password"
+
+[node name="PasswordEdit" type="LineEdit" parent="SshOptionsDialog/EditControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 150.0
+offset_top = 120.0
+offset_right = 240.0
+offset_bottom = 151.0
+secret = true
+secret_character = "*"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SshOptionsDialog/EditControl"]
+visible = false
+offset_right = 244.0
+offset_bottom = 168.0
+
+[node name="SourceChoiceDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+title = "Choose source location"
+initial_position = 4
+size = Vector2i(300, 150)
+dialog_hide_on_ok = false
+
+[node name="ButtonsContainer" type="Control" parent="SourceChoiceDialog"]
+layout_mode = 3
+anchor_top = -0.168
+anchor_right = 0.187
+offset_left = 8.0
+offset_top = 33.2
+offset_right = 235.9
+offset_bottom = 101.0
+
+[node name="LocalChoice" type="CheckButton" parent="SourceChoiceDialog/ButtonsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_left = 0.027
+anchor_right = 0.527
+anchor_bottom = 0.207
+offset_left = 0.332
+offset_top = 15.0
+offset_right = 8.332
+offset_bottom = 26.749
+button_group = SubResource("ButtonGroup_t1aaq")
+text = "Local"
+
+[node name="SshChoice" type="CheckButton" parent="SourceChoiceDialog/ButtonsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_left = 0.027
+anchor_top = 0.2
+anchor_right = 0.527
+anchor_bottom = 0.407
+offset_left = 0.332
+offset_top = 26.4
+offset_right = 8.332
+offset_bottom = 38.149
+button_group = SubResource("ButtonGroup_t1aaq")
+text = "SSH"
+
 [node name="PictureViewer" type="TextureRect" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -21,13 +157,28 @@ anchor_left = 0.013
 anchor_top = 0.106
 anchor_right = 0.763
 anchor_bottom = 0.856
-offset_left = 0.199999
-offset_top = -0.400009
-offset_right = 0.199951
-offset_bottom = -0.400085
+offset_left = -15.8
+offset_top = -84.4
+offset_right = -15.8
+offset_bottom = -84.4001
 texture = SubResource("ImageTexture_trsdu")
 expand_mode = 3
 stretch_mode = 5
+
+[node name="FolderView" type="Tree" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.814
+anchor_top = 0.039
+anchor_right = 0.95
+anchor_bottom = 0.878
+offset_left = 0.599976
+offset_top = -4.1
+offset_right = 3.99988
+offset_bottom = 4.79999
+allow_search = false
+scroll_vertical_enabled = false
 
 [node name="EmptyDirectoryControl" type="Control" parent="."]
 unique_name_in_owner = true
@@ -117,23 +268,9 @@ file_mode = 2
 access = 2
 unique_name_in_owner = true
 
-[node name="FolderView" type="Tree" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.814
-anchor_top = 0.039
-anchor_right = 0.95
-anchor_bottom = 0.878
-offset_left = 0.599976
-offset_top = -4.1
-offset_right = 3.99988
-offset_bottom = 4.79999
-allow_search = false
-scroll_vertical_enabled = false
-
-[connection signal="pressed" from="EmptyDirectoryControl/Button" to="." method="_on_button_pressed"]
+[connection signal="confirmed" from="SourceChoiceDialog" to="." method="_on_source_choice_dialog_confirmed"]
+[connection signal="item_selected" from="FolderView" to="." method="_on_folder_view_item_selected"]
+[connection signal="pressed" from="EmptyDirectoryControl/Button" to="." method="_on_empty_directory_button_pressed"]
 [connection signal="pressed" from="Previous" to="." method="_on_previous_pressed"]
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
 [connection signal="dir_selected" from="FolderDialog" to="." method="_on_native_file_dialog_dir_selected"]
-[connection signal="item_selected" from="FolderView" to="." method="_on_folder_view_item_selected"]
