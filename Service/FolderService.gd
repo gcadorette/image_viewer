@@ -19,7 +19,7 @@ func _init(config: GenericTypeTransferConfig):
 			pass
 
 func has_source() -> bool:
-	return type
+	return type != Enum.FileTransferType.unknown
 
 func get_all_elements(raw_file_types: Array[Variant], img_file_types: Array[Variant]) -> TreeFolder:
 	var files = _client.get_all_items()

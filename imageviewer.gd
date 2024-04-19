@@ -85,6 +85,7 @@ func _on_source_choice_dialog_confirmed():
 	if %LocalChoice.button_pressed:
 		%FolderDialog.show()
 	elif %SshChoice.button_pressed:
+		set_ssh_options_dialog_edits()
 		%SshOptionsDialog.show()
 	else:
 		return
@@ -93,7 +94,7 @@ func _on_source_choice_dialog_confirmed():
 
 func _on_ssh_options_dialog_confirmed():
 	reset_ssh_options_dialog()
-	var config: SshConfig = SshConfig.new(%HostNameEdit.get_text(), %HostNameEdit.get_text(), %HostNameEdit.get_text(), %HostNameEdit.get_text())
+	var config: SshConfig = SshConfig.new(%HostNameEdit.get_text(), int(%PortEdit.get_text()), %UsernameEdit.get_text(), %PasswordEdit.get_text())
 	_source_folder_service = FolderService.new(config)
 	var error = _source_folder_service.test_connection()
 	if not error.is_empty():
@@ -104,6 +105,8 @@ func _on_ssh_options_dialog_confirmed():
 		%SshOptionsDialog.size.y = min(new_height, Dimensions.SSH_OPTIONS_DIALOG_MAX_LENGTH)
 	else:
 		%SshOptionsDialog.hide()
+		_config_service.set_folder_source_ssh(config)
+		switch_views()
 
 func _on_ssh_options_dialog_visibility_changed():
 	reset_ssh_options_dialog()
@@ -112,3 +115,12 @@ func reset_ssh_options_dialog():
 	%RichTextLabel.set_text("")
 	%RichTextLabel.hide()
 	%SshOptionsDialog.size.y = Dimensions.SSH_OPTIONS_DIALOG_NO_ERROR_LENGTH
+
+func set_ssh_options_dialog_edits():
+	var config: SshConfig = SshConfig.new("", -1, "", "")
+	if _config_service.get_folder_source_type() == Enum.FileTransferType.ssh:
+		config = _config_service.get_folder_source()
+	%HostNameEdit.set_text(config.hostname)
+	%PortEdit.set_text(str(config.port) if config.port > 0 else "")
+	%UsernameEdit.set_text(config.username)
+	%PasswordEdit.set_text("")

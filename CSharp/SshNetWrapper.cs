@@ -20,7 +20,7 @@ public partial class SshNetWrapper : Node
         try {
             using var scpClient = new ScpClient(this.hostname, this.port, this.username, this.password);
             scpClient.Connect();
-            return "";
+            return string.Empty;
         } catch (Exception ex) {
             return ex.ToString();
         }

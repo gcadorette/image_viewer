@@ -42,17 +42,34 @@ func _init():
 					var source_tt_config = LocalFileSystemConfig.new(dir)
 					source_tt_config.type = type
 					_config_obj.folder_source = source_tt_config
+				elif type == Enum.FileTransferType.ssh:
+					var hostname = _config_file.get_value(FOLDER_SRC_SECTION, "hostname")
+					var port = _config_file.get_value(FOLDER_SRC_SECTION, "port")
+					var username = _config_file.get_value(FOLDER_SRC_SECTION, "username")
+					var config = SshConfig.new(hostname, port, username, "")
+					_config_obj.folder_source = config
 
-	
+func get_folder_source_type():
+	return _config_obj.folder_source.type
+
 func get_folder_source() -> GenericTypeTransferConfig:
 	return _config_obj.folder_source
 
 func set_folder_source_windows(dir: String) -> void:
 	var source_tt_config = LocalFileSystemConfig.new(dir)
 	
-	_config_file.set_value("FolderSrc", "dir", dir)
-	_config_file.set_value("FolderSrc", "type", source_tt_config.type)
+	_config_file.set_value(FOLDER_SRC_SECTION, "dir", dir)
+	_config_file.set_value(FOLDER_SRC_SECTION, "type", source_tt_config.type)
 	_config_obj.folder_source = source_tt_config
+	_save()
+
+func set_folder_source_ssh(config: SshConfig) -> void:
+	_config_file.set_value(FOLDER_SRC_SECTION, "type", config.type)
+	_config_file.set_value(FOLDER_SRC_SECTION, "hostname", config.hostname)
+	_config_file.set_value(FOLDER_SRC_SECTION, "port", config.port)
+	_config_file.set_value(FOLDER_SRC_SECTION, "username", config.username)
+
+	_config_obj.folder_source = config
 	_save()
 
 func get_raw_file_types() -> Array[Variant]:
@@ -82,4 +99,3 @@ func _unseparated_ini_config_to_capped_array(ini_config: String) -> Array[String
 	for uncapped in uncapped_splitted:
 		capped_array.append(uncapped.to_upper())
 	return capped_array
-
