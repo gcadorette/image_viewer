@@ -1,5 +1,6 @@
 extends Control
 var Enum = load("res://Models/Enum.gd")
+var Dimensions = load("res://Models/Dimensions.gd")
 
 var _config_service: ConfigService = null
 var _source_folder_service: FolderService = null
@@ -88,3 +89,26 @@ func _on_source_choice_dialog_confirmed():
 	else:
 		return
 	%SourceChoiceDialog.hide()
+
+
+func _on_ssh_options_dialog_confirmed():
+	reset_ssh_options_dialog()
+	var config: SshConfig = SshConfig.new(%HostNameEdit.get_text(), %HostNameEdit.get_text(), %HostNameEdit.get_text(), %HostNameEdit.get_text())
+	_source_folder_service = FolderService.new(config)
+	var error = _source_folder_service.test_connection()
+	if not error.is_empty():
+		var lines = ceil(error.length() / Dimensions.SSH_OPTIONS_DIALOG_LINE_CHARS)
+		var new_height = lines * Dimensions.SSH_OPTIONS_DIALOG_LINE_HEIGHT + Dimensions.SSH_OPTIONS_DIALOG_NO_ERROR_LENGTH
+		%RichTextLabel.set_text(error)
+		%RichTextLabel.show()
+		%SshOptionsDialog.size.y = min(new_height, Dimensions.SSH_OPTIONS_DIALOG_MAX_LENGTH)
+	else:
+		%SshOptionsDialog.hide()
+
+func _on_ssh_options_dialog_visibility_changed():
+	reset_ssh_options_dialog()
+
+func reset_ssh_options_dialog():
+	%RichTextLabel.set_text("")
+	%RichTextLabel.hide()
+	%SshOptionsDialog.size.y = Dimensions.SSH_OPTIONS_DIALOG_NO_ERROR_LENGTH

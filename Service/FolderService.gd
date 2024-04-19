@@ -10,10 +10,11 @@ func _init(config: GenericTypeTransferConfig):
 	type = config.type
 	match type:
 		Enum.FileTransferType.local:
-			var local_folder_config: WindowsFileSystemConfig = config
-			_client = WindowsFolderClient.new(local_folder_config)
+			var local_folder_config: LocalFileSystemConfig = config
+			_client = LocalFolderClient.new(local_folder_config)
 		Enum.FileTransferType.ssh:
-			pass
+			var ssh_config: SshConfig = config
+			_client = SshClient.new(ssh_config)
 		_:
 			pass
 
@@ -47,7 +48,8 @@ func get_all_elements(raw_file_types: Array[Variant], img_file_types: Array[Vari
 func get_real_file_url(relative_path: String, filename: String) -> String:
 	return _client.get_file_path("%s%s" % [relative_path, filename])
 			
-
+func test_connection() -> String:
+	return _client.test_connection()
 
 
 

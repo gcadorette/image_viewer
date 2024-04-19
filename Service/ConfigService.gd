@@ -39,7 +39,7 @@ func _init():
 				var type = int(_config_file.get_value(FOLDER_SRC_SECTION, "type"))
 				if type == Enum.FileTransferType.local:
 					var dir = _config_file.get_value(FOLDER_SRC_SECTION, "dir")
-					var source_tt_config = WindowsFileSystemConfig.new(dir)
+					var source_tt_config = LocalFileSystemConfig.new(dir)
 					source_tt_config.type = type
 					_config_obj.folder_source = source_tt_config
 
@@ -48,7 +48,7 @@ func get_folder_source() -> GenericTypeTransferConfig:
 	return _config_obj.folder_source
 
 func set_folder_source_windows(dir: String) -> void:
-	var source_tt_config = WindowsFileSystemConfig.new(dir)
+	var source_tt_config = LocalFileSystemConfig.new(dir)
 	
 	_config_file.set_value("FolderSrc", "dir", dir)
 	_config_file.set_value("FolderSrc", "type", source_tt_config.type)

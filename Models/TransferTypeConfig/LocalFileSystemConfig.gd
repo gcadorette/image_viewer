@@ -1,5 +1,4 @@
-class_name WindowsFileSystemConfig
-
+class_name LocalFileSystemConfig
 extends GenericTypeTransferConfig
 var dir: String = ""
 

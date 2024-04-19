@@ -1,8 +1,8 @@
-class_name WindowsFolderClient
+class_name LocalFolderClient
 extends GenericFolderClient
 var _dir: String = ""
 
-func _init(config: WindowsFileSystemConfig): 
+func _init(config: LocalFileSystemConfig): 
 	_dir = config.dir
 
 func get_all_items() -> Array[FolderItems]:

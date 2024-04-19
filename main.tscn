@@ -19,7 +19,7 @@ script = ExtResource("1_156ou")
 unique_name_in_owner = true
 title = "SSH Login Informations"
 initial_position = 4
-size = Vector2i(260, 225)
+size = Vector2i(260, 250)
 dialog_hide_on_ok = false
 
 [node name="EditControl" type="Control" parent="SshOptionsDialog"]
@@ -28,7 +28,7 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = -217.0
+offset_top = -242.0
 offset_right = 252.0
 offset_bottom = -49.0
 grow_vertical = 0
@@ -102,9 +102,12 @@ secret = true
 secret_character = "*"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SshOptionsDialog/EditControl"]
+unique_name_in_owner = true
 visible = false
+layout_mode = 0
+offset_top = 180.0
 offset_right = 244.0
-offset_bottom = 168.0
+offset_bottom = 348.0
 
 [node name="SourceChoiceDialog" type="AcceptDialog" parent="."]
 unique_name_in_owner = true
@@ -268,6 +271,8 @@ file_mode = 2
 access = 2
 unique_name_in_owner = true
 
+[connection signal="confirmed" from="SshOptionsDialog" to="." method="_on_ssh_options_dialog_confirmed"]
+[connection signal="visibility_changed" from="SshOptionsDialog" to="." method="_on_ssh_options_dialog_visibility_changed"]
 [connection signal="confirmed" from="SourceChoiceDialog" to="." method="_on_source_choice_dialog_confirmed"]
 [connection signal="item_selected" from="FolderView" to="." method="_on_folder_view_item_selected"]
 [connection signal="pressed" from="EmptyDirectoryControl/Button" to="." method="_on_empty_directory_button_pressed"]
